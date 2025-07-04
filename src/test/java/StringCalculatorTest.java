@@ -30,4 +30,10 @@ class StringCalculatorTest {
 
         }
 
+    @Test
+    void numbersWithNewlinesShouldReturnSum() {
+        StringCalculator calc = new StringCalculator();
+        assertEquals(6, calc.add("1\n2,3")); // 1 + 2 + 3 = 6
+    }
+
 }
