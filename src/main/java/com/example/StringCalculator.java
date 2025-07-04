@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class StringCalculator {
 
-    private static final Set<String> DELIMITERS = Set.of(",");
+    private static final Set<String> DELIMITERS = Set.of(",","\n");
 
     public int add(String input) {
         if (input == null || input.equals("")) {
@@ -21,8 +21,11 @@ public class StringCalculator {
     }
 
     private String[] splitNumbers(String input) {
-        String delimiter = DELIMITERS.iterator().next();
-        return input.split(delimiter);
+        // Combine delimiters into a regex separated by "|"
+        //works for ',' and '\n' as delimiter
+        String delimiterRegex = String.join("|", DELIMITERS);
+
+        return input.split(delimiterRegex);
     }
 
     private int getSum(String [] numbers){
