@@ -36,4 +36,10 @@ class StringCalculatorTest {
         assertEquals(6, calc.add("1\n2,3")); // 1 + 2 + 3 = 6
     }
 
+    @Test
+    void customDelimiterShouldReturnSum() {
+        StringCalculator calc = new StringCalculator();
+        assertEquals(5, calc.add("//;\n3;2")); // delimiter is ; → 1 + 2 = 3
+    }
+
 }
