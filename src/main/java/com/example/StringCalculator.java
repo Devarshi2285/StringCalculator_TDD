@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -39,12 +41,20 @@ public class StringCalculator {
     private int getSum(String [] numbers){
 
         int sum = 0;
+        List<Integer>negativeNumbers=new ArrayList<Integer>();
         for (String number : numbers) {
             int num = Integer.parseInt(number);
             if(num<0){
-                throw new IllegalArgumentException("negatives not allowed: " + num);
+               negativeNumbers.add(num);
             }
             sum += num;
+        }
+        if(!negativeNumbers.isEmpty()){
+            String negativesStr = negativeNumbers.stream()
+                    .map(String::valueOf)
+                    .reduce((a, b) -> a + ", " + b)
+                    .orElse("");
+            throw new IllegalArgumentException("negatives not allowed: " + negativesStr);
         }
         return sum;
 
