@@ -2,6 +2,7 @@ import com.example.StringCalculator;
 import com.example.StringCalculator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class StringCalculatorTest {
 
@@ -40,6 +41,15 @@ class StringCalculatorTest {
     void customDelimiterShouldReturnSum() {
         StringCalculator calc = new StringCalculator();
         assertEquals(5, calc.add("//;\n3;2")); // delimiter is ; → 1 + 2 = 3
+    }
+
+    @Test
+    void negativeNumberShouldThrowException() {
+        StringCalculator calc = new StringCalculator();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
+            calc.add("1,-5,3");
+        });
+        assertEquals("negatives not allowed: -5", ex.getMessage());
     }
 
 }
