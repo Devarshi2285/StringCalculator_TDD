@@ -7,8 +7,8 @@ public class StringCalculator {
             return 0;
         }
 
-        //Not implemented yet...
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Integer.parseInt(input.trim());
+
     }
 
 
