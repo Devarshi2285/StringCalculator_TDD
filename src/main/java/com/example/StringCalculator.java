@@ -11,10 +11,6 @@ public class StringCalculator {
             return 0;
         }
 
-        if (!containsDelimiter(input)) {
-            return Integer.parseInt(input);
-        }
-
         String[] numbers = splitNumbers(input);
         //Works for unknown amount of numbers
         int sum = 0;
