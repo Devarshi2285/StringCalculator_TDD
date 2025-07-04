@@ -16,8 +16,12 @@ public class StringCalculator {
         }
 
         String[] numbers = splitNumbers(input);
-        //WORKS FOR TWO NUMBERS
-        return Integer.parseInt(numbers[0]) + Integer.parseInt(numbers[1]);
+        //Works for unknown amount of numbers
+        int sum = 0;
+        for (String number : numbers) {
+            sum += Integer.parseInt(number);
+        }
+        return sum;
 
     }
 
