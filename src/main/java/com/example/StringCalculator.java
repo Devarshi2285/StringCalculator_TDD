@@ -13,12 +13,7 @@ public class StringCalculator {
 
         String[] numbers = splitNumbers(input);
         //Works for unknown amount of numbers
-        int sum = 0;
-        for (String number : numbers) {
-            sum += Integer.parseInt(number);
-        }
-        return sum;
-
+        return getSum(numbers);
     }
 
     private boolean containsDelimiter(String input) {
@@ -28,6 +23,15 @@ public class StringCalculator {
     private String[] splitNumbers(String input) {
         String delimiter = DELIMITERS.iterator().next();
         return input.split(delimiter);
+    }
+
+    private int getSum(String [] numbers){
+        int sum = 0;
+        for (String number : numbers) {
+            sum += Integer.parseInt(number);
+        }
+        return sum;
+
     }
 
 
