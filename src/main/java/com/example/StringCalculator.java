@@ -7,7 +7,12 @@ public class StringCalculator {
             return 0;
         }
 
-        return Integer.parseInt(input.trim());
+        if (!input.contains(",")) {
+            return Integer.parseInt(input);
+        }
+
+        String[] numbers = input.split(",");
+        return Integer.parseInt(numbers[0]) + Integer.parseInt(numbers[1]);
 
     }
 
