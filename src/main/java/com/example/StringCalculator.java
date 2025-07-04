@@ -41,23 +41,44 @@ public class StringCalculator {
     private int getSum(String [] numbers){
 
         int sum = 0;
-        List<Integer>negativeNumbers=new ArrayList<Integer>();
+        List<Integer>negativeNumbers= new ArrayList<>();
         for (String number : numbers) {
             int num = Integer.parseInt(number);
-            if(num<0){
-               negativeNumbers.add(num);
+            if (isNegative(num, negativeNumbers)) {
+                continue; // negative was added to list; continue processing
             }
             sum += num;
         }
-        if(!negativeNumbers.isEmpty()){
-            String negativesStr = negativeNumbers.stream()
+
+        //handle any number of -ve number and throws exception
+        checkAndThrowIfNegativesFound(negativeNumbers);
+        return sum;
+
+    }
+
+    /**
+     * Checks if the number is negative; if so, adds to negatives list.
+     * Returns true if number was negative.
+     */
+    private boolean isNegative(int n, List<Integer> negatives) {
+        if (n < 0) {
+            negatives.add(n);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Throws an exception if any negatives were found.
+     */
+    private void checkAndThrowIfNegativesFound(List<Integer> negatives) {
+        if (!negatives.isEmpty()) {
+            String negativesStr = negatives.stream()
                     .map(String::valueOf)
                     .reduce((a, b) -> a + ", " + b)
                     .orElse("");
             throw new IllegalArgumentException("negatives not allowed: " + negativesStr);
         }
-        return sum;
-
     }
 
 }
