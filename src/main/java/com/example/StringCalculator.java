@@ -1,6 +1,7 @@
 package com.example;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class StringCalculator {
 
@@ -16,19 +17,24 @@ public class StringCalculator {
         return getSum(numbers);
     }
 
-    private boolean containsDelimiter(String input) {
-        return DELIMITERS.stream().anyMatch(input::contains);
-    }
-
     private String[] splitNumbers(String input) {
         // Combine delimiters into a regex separated by "|"
-        //works for ',' and '\n' as delimiter
-        String delimiterRegex = String.join("|", DELIMITERS);
+        //works for ',' and '\n' as delimiter and variable delimiter
 
-        return input.split(delimiterRegex);
+        String delimiterRegex = "";
+
+        String numberPart = "";
+        if(input.startsWith("//")){
+            String customDelimiter = input.substring(2, 3);
+            delimiterRegex = Pattern.quote(customDelimiter) + "|" + String.join("|", DELIMITERS);
+            numberPart = input.substring(4);
+        }
+
+        return numberPart.split(delimiterRegex);
     }
 
     private int getSum(String [] numbers){
+
         int sum = 0;
         for (String number : numbers) {
             sum += Integer.parseInt(number);
