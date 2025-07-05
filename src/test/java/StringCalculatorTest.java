@@ -61,4 +61,14 @@ class StringCalculatorTest {
         assertEquals("negatives not allowed: -5, -7, -9", ex.getMessage());
     }
 
+    @Test
+    void getCalledCountShouldReturnNumberOfAddCalls() {
+        StringCalculator calc = new StringCalculator();
+        calc.add("1,2");
+        calc.add("3,4");
+        calc.add("5");
+
+        assertEquals(3, calc.getCalledCount());
+    }
+
 }
