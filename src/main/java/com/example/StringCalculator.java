@@ -14,6 +14,10 @@ public class StringCalculator {
         return addCallCount;
     }
 
+    public static void resetCallCount() {
+        addCallCount = 0;
+    }
+
     public int add(String input) {
         addCallCount++;
         if (input == null || input.equals("")) {

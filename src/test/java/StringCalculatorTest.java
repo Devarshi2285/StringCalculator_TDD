@@ -63,7 +63,10 @@ class StringCalculatorTest {
 
     @Test
     void getCalledCountShouldReturnNumberOfAddCalls() {
+
+        StringCalculator.resetCallCount();
         StringCalculator calc = new StringCalculator();
+
         calc.add("1,2");
         calc.add("3,4");
         calc.add("5");
