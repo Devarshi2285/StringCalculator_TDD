@@ -98,6 +98,43 @@ class StringCalculatorTest {
         assertEquals(6, calc.add("//[**][%%]\n1**2%%3"));
     }
 
+    @Test
+    void numbersWithCustomDelimiterAndNewlinesShouldReturnSum() {
+        StringCalculator calc = new StringCalculator();
+        assertEquals(10, calc.add("//;\n1;2\n3;4"));
+    }
+
+    @Test
+    void emptyStringWithCustomDelimiterReturnsZero() {
+        StringCalculator calc = new StringCalculator();
+        assertEquals(0, calc.add("//;\n"));
+    }
+
+    @Test
+    void customDelimiterWithSingleNumberReturnsThatNumber() {
+        StringCalculator calc = new StringCalculator();
+        assertEquals(42, calc.add("//;\n42"));
+    }
+
+    @Test
+    void numbersWithMultipleDelimitersIncludingNewlinesShouldReturnSum() {
+        StringCalculator calc = new StringCalculator();
+        assertEquals(15, calc.add("//[*][%]\n1*2%3\n4,5"));
+    }
+
+    @Test
+    void numbersWithMultipleMultiCharDelimitersAndLargeNumbersIgnored() {
+        StringCalculator calc = new StringCalculator();
+        assertEquals(10, calc.add("//[**][%%]\n1**2%%3**4**1001"));
+    }
+
+
+    @Test
+    void shouldHandleManyNumbersWithMixedDelimiters() {
+        StringCalculator calc = new StringCalculator();
+        assertEquals(55, calc.add("1,2,3\n4,5\n6,7,8,9,10"));
+    }
+
 
 
 }
