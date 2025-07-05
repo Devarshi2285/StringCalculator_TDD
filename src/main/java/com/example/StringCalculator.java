@@ -57,6 +57,9 @@ public class StringCalculator {
             if (isNegative(num, negativeNumbers)) {
                 continue; // negative was added to list; continue processing
             }
+            if(num>1000){
+                continue;
+            }
             sum += num;
         }
 
