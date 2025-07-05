@@ -37,7 +37,7 @@ public class StringCalculator {
             int delimiterEndIdx = input.indexOf("\n");
             String delimiterSection = input.substring(2, delimiterEndIdx);
 
-            delimiterRegex = buildDelimiterRegex(delimiterSection);
+            delimiterRegex = buildMultipleSingleCharDelimiterRegex(delimiterSection);
 
             numbersPart = input.substring(delimiterEndIdx + 1);
         }
@@ -45,14 +45,36 @@ public class StringCalculator {
         return numbersPart.split(delimiterRegex);
     }
 
-    private String buildDelimiterRegex(String delimiterSection) {
-        String customDelimiter;
-        if (delimiterSection.startsWith("[") && delimiterSection.endsWith("]")) {
-            customDelimiter = delimiterSection.substring(1, delimiterSection.length() - 1);
+    private String buildMultipleSingleCharDelimiterRegex(String delimiterSection) {
+        StringBuilder combinedRegex = new StringBuilder();
+
+        if (delimiterSection.startsWith("[") && delimiterSection.contains("]")) {
+            // One or multiple delimiters inside brackets: [delim1][delim2]
+            int idx = 0;
+            while (idx < delimiterSection.length()) {
+                int open = delimiterSection.indexOf('[', idx);
+                int close = delimiterSection.indexOf(']', open);
+                if (open == -1 || close == -1) {
+                    break; // malformed section
+                }
+                String delim = delimiterSection.substring(open + 1, close);
+                if (!delim.isEmpty()) { // skip empty delimiters
+                    if (combinedRegex.length() > 0) {
+                        combinedRegex.append("|");
+                    }
+                    combinedRegex.append(Pattern.quote(delim)); // quote any length
+                }
+                idx = close + 1;
+            }
         } else {
-            customDelimiter = delimiterSection;
+            // Single-character delimiter declared without brackets, e.g., //;\n
+            combinedRegex.append(Pattern.quote(delimiterSection));
         }
-        return Pattern.quote(customDelimiter) + "|" + DELIMITERS_REGX;
+
+        // Always add default delimiters
+        combinedRegex.append("|").append(DELIMITERS_REGX);
+
+        return combinedRegex.toString();
     }
 
 
