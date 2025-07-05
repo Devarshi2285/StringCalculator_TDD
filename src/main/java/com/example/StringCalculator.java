@@ -81,6 +81,7 @@ public class StringCalculator {
 
     private int getSum(String [] numbers){
 
+
         int sum = 0;
         List<Integer>negativeNumbers= new ArrayList<>();
         for (String number : numbers) {
