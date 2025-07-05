@@ -144,7 +144,12 @@ public class StringCalculator {
         List<Integer> negativeNumbers = new ArrayList<>();
 
         for (String numStr : numbers) {
+            if (numStr.isEmpty()) {
+                continue; // skip empty parts (like after "//;\n")
+            }
+
             int num = Integer.parseInt(numStr);
+
 
             if (num < 0) {
                 negativeNumbers.add(num);
