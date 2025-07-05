@@ -30,23 +30,29 @@ public class StringCalculator {
     }
 
     private String[] splitNumbers(String input) {
-        // Combine delimiters into a regex separated by "|"
-        //works for ',' and '\n' as delimiter and variable delimiter
+        String delimiterRegex = DELIMITERS_REGX;  // default delimiters: comma or newline
+        String numbersPart = input;               // actual numbers section
 
-        String delimiterRegex = DELIMITERS_REGX;
+        if (input.startsWith("//")) {
+            int delimiterEndIdx = input.indexOf("\n");
+            String delimiterSection = input.substring(2, delimiterEndIdx);
 
+            String customDelimiter;
+            if (delimiterSection.startsWith("[") && delimiterSection.endsWith("]")) {
+                // Multi-character delimiter: extract inside brackets
+                customDelimiter = delimiterSection.substring(1, delimiterSection.length() - 1);
+            } else {
+                // Single-character delimiter
+                customDelimiter = delimiterSection;
+            }
+            delimiterRegex = Pattern.quote(customDelimiter) + "|" + DELIMITERS_REGX;
 
-        if(input.startsWith("//")){
-            String numberPart = "";
-            String customDelimiter = input.substring(2, 3);
-            delimiterRegex = Pattern.quote(customDelimiter) ;
-            numberPart = input.substring(4);
-            return numberPart.split(delimiterRegex);
+            numbersPart = input.substring(delimiterEndIdx + 1); // skip the delimiter declaration section
         }
 
-        return input.split(delimiterRegex);
-
+        return numbersPart.split(delimiterRegex);
     }
+
 
     private int getSum(String [] numbers){
 
