@@ -74,4 +74,11 @@ class StringCalculatorTest {
         assertEquals(3, calc.getCalledCount());
     }
 
+    @Test
+    void numberLargerThanThousandShouldIgnored() {
+            StringCalculator calc = new StringCalculator();
+            assertEquals(2,calc.add("//*\n1001*2"));
+
+    }
+
 }
