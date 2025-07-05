@@ -8,8 +8,14 @@ import java.util.regex.Pattern;
 public class StringCalculator {
 
     private static final String DELIMITERS_REGX = ",|\n";
+    private static int addCallCount=0;
+
+    public int getCalledCount() {
+        return addCallCount;
+    }
 
     public int add(String input) {
+        addCallCount++;
         if (input == null || input.equals("")) {
             return 0;
         }
